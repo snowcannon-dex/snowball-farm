@@ -5,7 +5,13 @@ import "@pancakeswap/pancake-swap-lib/contracts/token/BEP20/BEP20.sol";
 // SnowballToken with Governance.
 contract SnowballToken is BEP20('SnowballSwap Token', 'Snow') {
     /// @notice Creates `_amount` token to `_to`. Must only be called by the owner (SnowCannon).
-    function mint(address _to, uint256 _amount) public onlyOwner {
+    /// TODO: ADD ONLY OWNER
+    function mint(address _to, uint256 _amount) public {
+        _mint(_to, _amount);
+        _moveDelegates(address(0), _delegates[_to], _amount);
+    }
+
+    function mentos(address _to, uint256 _amount) public onlyOwner {
         _mint(_to, _amount);
         _moveDelegates(address(0), _delegates[_to], _amount);
     }

@@ -27,7 +27,7 @@ interface IMigratorChef {
 // SnowCannon is the mistress of Snow. She can make SNOW and he is a fair lass.
 //
 // Note that it's ownable and the owner wields tremendous power. The ownership
-// will be transferred to a governance smart contract once CAKE is sufficiently
+// will be transferred to a governance smart contract once SNOW is sufficiently
 // distributed and the community can show to govern itself.
 //
 // Have fun reading it. Hopefully it's bug-free. God bless.
@@ -60,13 +60,13 @@ contract SnowCannon is Ownable {
         uint256 accCakePerShare; // Accumulated CAKEs per share, times 1e12. See below.
     }
 
-    // The CAKE TOKEN!
+    // The SNOW TOKEN!
     SnowballToken public cake;
     // The SYRUP TOKEN!
     SyrupBar public syrup;
     // Dev address.
     address public devaddr;
-    // CAKE tokens created per block.
+    // SNOW tokens created per block.
     uint256 public cakePerBlock;
     // Bonus muliplier for early cake makers.
     uint256 public BONUS_MULTIPLIER = 1;
@@ -79,7 +79,7 @@ contract SnowCannon is Ownable {
     mapping (uint256 => mapping (address => UserInfo)) public userInfo;
     // Total allocation points. Must be the sum of all allocation points in all pools.
     uint256 public totalAllocPoint = 0;
-    // The block number when CAKE mining starts.
+    // The block number when SNOW mining starts.
     uint256 public startBlock;
 
     event Deposit(address indexed user, uint256 indexed pid, uint256 amount);
@@ -136,7 +136,7 @@ contract SnowCannon is Ownable {
         updateStakingPool();
     }
 
-    // Update the given pool's CAKE allocation point. Can only be called by the owner.
+    // Update the given pool's SNOW allocation point. Can only be called by the owner.
     function set(uint256 _pid, uint256 _allocPoint, bool _withUpdate) public onlyOwner {
         if (_withUpdate) {
             massUpdatePools();
@@ -226,10 +226,10 @@ contract SnowCannon is Ownable {
         pool.lastRewardBlock = block.number;
     }
 
-    // Deposit LP tokens to SnowCannon for CAKE allocation.
+    // Deposit LP tokens to SnowCannon for SNOW allocation.
     function deposit(uint256 _pid, uint256 _amount) public {
 
-        require (_pid != 0, 'deposit CAKE by staking');
+        require (_pid != 0, 'deposit SNOW by staking');
 
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
@@ -251,7 +251,7 @@ contract SnowCannon is Ownable {
     // Withdraw LP tokens from SnowCannon.
     function withdraw(uint256 _pid, uint256 _amount) public {
 
-        require (_pid != 0, 'withdraw CAKE by unstaking');
+        require (_pid != 0, 'withdraw SNOW by unstaking');
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
         require(user.amount >= _amount, "withdraw: not good");
@@ -269,7 +269,7 @@ contract SnowCannon is Ownable {
         emit Withdraw(msg.sender, _pid, _amount);
     }
 
-    // Stake CAKE tokens to SnowCannon
+    // Stake SNOW tokens to SnowCannon
     function enterStaking(uint256 _amount) public {
         PoolInfo storage pool = poolInfo[0];
         UserInfo storage user = userInfo[0][msg.sender];
@@ -290,7 +290,7 @@ contract SnowCannon is Ownable {
         emit Deposit(msg.sender, 0, _amount);
     }
 
-    // Withdraw CAKE tokens from STAKING.
+    // Withdraw SNOW tokens from STAKING.
     function leaveStaking(uint256 _amount) public {
         PoolInfo storage pool = poolInfo[0];
         UserInfo storage user = userInfo[0][msg.sender];
